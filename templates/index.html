@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🎗 Alumni Fundraising Campaign</title>
+<style>
+  /* BODY STYLING */
+  body { 
+    font-family: 'Poppins', sans-serif; 
+    background: linear-gradient(135deg, #ffe6f0, #fff0f5); 
+    margin: 0; 
+    padding: 20px; 
+    color: #333;
+  }
+
+  h1, h2, h3 { 
+    color: #b30059; 
+    margin-bottom: 15px; 
+    font-weight: 600;
+  }
+
+  h1 { 
+    text-align: center; 
+    font-size: 2.8em; 
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  }
+
+  /* CONTAINER & CARD */
+  .container { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 30px;
+  }
+
+  .card { 
+    background: #fff; 
+    width: 45%; 
+    min-width: 320px; 
+    margin: 10px; 
+    padding: 30px 25px; 
+    border-radius: 25px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  }
+
+  /* INPUT & TEXTAREA */
+  input, textarea { 
+    width: 90%; 
+    padding: 12px 15px; 
+    margin: 10px 0; 
+    border-radius: 12px; 
+    border: 1px solid #ddd; 
+    outline: none; 
+    font-size: 15px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input:focus, textarea:focus {
+    border-color: #b30059;
+    box-shadow: 0 0 8px rgba(179,0,89,0.2);
+  }
+
+  textarea { 
+    min-height: 100px; 
+    resize: vertical; 
+  }
+
+  /* BUTTON STYLING */
+  button { 
+    background: #b30059; 
+    color: white; 
+    padding: 12px 25px; 
+    border: none; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    margin-top: 15px; 
+    transition: all 0.3s ease;
+  }
+
+  button:hover { 
+    background: #ff3366; 
+    transform: scale(1.05);
+  }
+
+  button.delete-btn {
+    background: #ff0000;
+  }
+
+  button.delete-btn:hover {
+    background: #ff4d4d;
+  }
+
+  /* LIST STYLING */
+  ul { 
+    list-style: none; 
+    padding: 0; 
+    margin-top: 15px;
+    text-align: left;
+  }
+
+  li { 
+    padding: 8px 0; 
+    border-bottom: 1px solid #f0f0f0; 
+    font-size: 15px;
+  }
+
+  /* HR STYLING */
+  hr { 
+    margin: 25px 0; 
+    border: 0; 
+    height: 1px; 
+    background: #f0f0f0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .card { width: 80%; }
+  }
+
+</style>
+
+</head>
+<body>
+  <h1>🎗 Alumni Fundraising Portal</h1>
+
+  <div class="container">
+
+    <!-- ADMIN SECTION -->
+    <div class="card">
+      <h2>Admin Panel: Manage Campaign</h2>
+
+      <!-- Create Campaign Form -->
+      <form action="/create_campaign" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Campaign Name" required><br>
+        <input type="text" name="subject" placeholder="Email Subject" required><br>
+        <textarea name="message" placeholder="Email Message" required></textarea><br>
+        <input type="file" name="file" accept=".xlsx" required><br><br>
+        <button type="submit">Start Campaign 🚀</button>
+      </form>
+
+      <!-- Delete Campaign Form -->
+      {% if campaign.name %}
+      <form action="/delete_campaign" method="post">
+        <button type="submit" style="background:#ff0000;">Delete Current Campaign ❌</button>
+      </form>
+      {% endif %}
+    </div>
+
+    <!-- DONOR SECTION -->
+    <div class="card">
+      <h2>Donate</h2>
+      {% if campaign.name %}
+        <h3>Current Campaign: {{ campaign.name }}</h3>
+        <form action="/donate" method="post">
+          <input type="text" name="name" placeholder="Your Name" required><br>
+          <input type="email" name="email" placeholder="Your Email" required><br>
+          <input type="number" name="amount" placeholder="Donation Amount" required><br><br>
+          <button type="submit">Donate💖</button>
+        </form>
+
+        <h3>Donors List</h3>
+        <ul>
+          {% for donor in campaign.donors %}
+            <li>{{ donor.name }} - ₹{{ donor.amount }} - {{ donor.email }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p style="color:#b30059; font-weight:bold;">No active campaigns at the moment.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</body>
+</html>

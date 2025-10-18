@@ -1,0 +1,20 @@
+{
+  "name": "Book Donation ",
+  "donors": [
+    {
+      "Name": NaN,
+      "Amount": NaN,
+      "Email": NaN,
+      "Date": NaN,
+      "name": "sameena",
+      "amount": 1000,
+      "email": "sksameena440@gmail.com",
+      "date": "2025-10-17T12:12:24.989905"
+    }
+  ],
+  "days_left": 13,
+  "total_raised": 0.0,
+  "goal_amount": 500000,
+  "start_date": "2025-10-17T12:21:36.109706",
+  "duration_days": 14
+}
